@@ -1,10 +1,10 @@
-Shop From Home
+<h1>Shop From Home</h1>
 
 Team Name : Webers
 
-Proposed Featues :
+<h2>Proposed Featues :</h2>
 
-For Customers -
+<h3>For Customers -</h3>
 
 SignUp and Login feature
 
@@ -14,7 +14,7 @@ Add the required item to the database, if unavailable
 
 Feature to maintain past orders & request a return
 
-For Shopkeepers :
+<h3>For Shopkeepers :</h3>
 
 SignUp and Login
 
@@ -26,7 +26,7 @@ Send requests to shopkeepers only if that product is available with them
 
 We will decide rest of the features after learning and try to implement them.
 
-Tech Stack :
+<h4>Tech Stack :</h4>
 
 HTML, CSS, JavaScript, Bootstrap for front-end
 
