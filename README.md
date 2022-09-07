@@ -2,16 +2,6 @@ Shop From Home
 
 Team Name : Webers
 
-Team Members Name :
-
-Sansriti Maurya (https://github.com/sansriti14)
-
-Ajay Patel (https://github.com/Ajay051839)
-
-Utkrisht Singh (https://github.com/utkrisht5)
-
-Ayush Kumar (https://github.com/ayushkumar272020)
-
 Proposed Featues :
 
 For Customers -
