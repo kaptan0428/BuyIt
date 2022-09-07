@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  <style>
+    
+    
+    #io{
+      margin-top: 20px; ;
+      
+    }
+    ul.nav {
+    margin:0;
+    padding:1px;
+    list-style:none;
+    height:50px; line-height:50px;
+    background:#0d7963; /* you can change the backgorund color here. */
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:13px;
+}
+ul.nav li {
+    border-right:1px solid #189b80; /* you can change the border color matching to your background color */
+    float:left;
+}
+ul.nav a {
+    display:block;
+    padding:0 28px;
+    color:#ccece6;
+    text-decoration:none;
+}
+ul.nav a:hover,
+ul.nav li.current a {
+    background:#086754;
+}
+.mb-3{
+  margin:10px;
+}
+#ut{
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  font-size: larger;
+}
+.container-fluid my-4 shadow{
+  background-image: none;
+}
+    
+
+.form-label{
+  font-size: medium;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+  </style>
+</head>
+
+<body>
+  <ul class="nav">
+    <li id="ut">Shopify</li>
+    <li><a href="/customerHome">Home</a></li>
+    <li><a href="/customerLogout">Logout</a></li>
+    <li>
+      
+        <a href="/receivedResponses">Received responses</a>
+      
+      
+      <li>
+        <a href="/pastOrders">Past orders</a>
+     </li>
+      <li>
+      
+        <a href="/unavailable">Unavailable items</a>
+     
+    </li>
+    
+  </ul>
+  
+
+
+
+
+
+
+<button
+  class="btn btn-primary"
+  type="button"
+  data-bs-toggle="offcanvas"
+  data-bs-target="#offcanvasRight"
+  aria-controls="offcanvasRight"
+>
+  Broadcast request
+</button>
+
+<div
+  class="offcanvas offcanvas-end"
+  tabindex="-1"
+  id="offcanvasRight"
+  aria-labelledby="offcanvasRightLabel"
+>
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">Broadcast a request</h5>
+  </div>
+  <div class="offcanvas-body">
+    <form action="/broadcastRequest" method="post">
+      {%csrf_token%}
+      <div class="mb-3">
+        <label for="item" class="form-label">Item name</label>
+        <input type="text" class="form-control" id="item" name="item" />
+      </div>
+      <div class="mb-3">
+        <label for="quantity" class="form-label">Quantity</label>
+        <input
+          type="number"
+          class="form-control"
+          id="quantity"
+          name="quantity"
+        />
+      </div>
+      <div class="form-check mb-3">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="orderType"
+          value="manual"
+          id="flexRadioDefault1"
+        />
+        <label class="form-check-label" for="flexRadioDefault1">
+          Manual order
+        </label>
+      </div>
+      <div class="form-check mb-3">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="orderType"
+          value="automatic"
+          id="flexRadioDefault2"
+          checked
+        />
+        <label class="form-check-label" for="flexRadioDefault2">
+          Automatic order
+        </label>
+      </div>
+
+      <button type="submit" type="button" class="btn btn-primary">
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
+
+
+
+<div class="container" style="width: 80%; margin-top: 20px;">
+  <!-- Content here -->
+  {% if shops %}
+  {% for shop in shops %}
+  <div class="card mb-3" style="width: 100%;">
+    {% comment %} <form action="{% url " openShop" customer.pk %}" method="post"> {% endcomment %}
+      {% csrf_token %}
+      <input type="hidden" class="form-control" id="ShopId" name="ShopId" value={{ shop.pk }}>
+      <div class="row g-0">
+        <div class="col-md-4" style="width: 280px; height: 210px;">
+          <img src="{{ shop.image.url }}" class="img-fluid rounded-start" style="width: 280px; height: 210px;"
+            alt="...">
+        </div>
+        <div class="col-md-8">
+          <button type="submit" class="btn btn-success"
+            style="background-color: white; border: none; box-shadow: none; text-align: left">
+            <div class="card-body">
+              <h5 class="card-title" style="margin-bottom: 20px; color: black;">{{ shop.shop }}</h5>
+              <p class="card-text" style="margin-bottom: 10px; color: black;">Name of Shopkeeper
+                : {{ shop.name }}</p>
+              <p class="card-text" style="margin-bottom: 10px; color: black;">Email Address
+                : {{ shop.email }}</p>
+            </div>
+          </button>
+          <a href="{{shop.id}}/enterShop" class="btn btn-primary">Enter shop</a>
+<a href="/{{shop.id}}/shopComments" class="btn btn-primary">Comments</a>
+<form action="/{{shop.id}}/submitComments" method="post">
+  <div class="mb-3"">
+        <label for=" comment" class="form-label">Comment</label>
+    <textarea class="form-control" style="width: 500px; border: 1px solid black; border-radius: 1px;" id="comment"
+      name="comment"></textarea>
+  </div>
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+        </div>
+      </div>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<h1>Sorry!!</h1>
+<h3>As of now, there are no shops listed here</h3>
+{% endif %}
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
+
+<!-- {% for shop in shops %}
+<img
+  src="{{shop.image.url}}"
+  alt="{{shop.name}}"
+  style="height: 300px; width: 300px"
+/>
+<h5>{{shop.shop}}</h5>
+<h6>{{shop.name}}</h6>
+<p>{{shop.phone}}</p>
+<a href="{{shop.id}}/enterShop" class="btn btn-primary">Enter shop</a>
+<a href="/{{shop.id}}/shopComments" class="btn btn-primary">Comments</a>
+<form action="/{{shop.id}}/submitComments" method="post">
+  <div class="mb-3"">
+        <label for=" comment" class="form-label">Comment</label>
+    <textarea class="form-control" style="width: 500px; border: 1px solid black; border-radius: 1px;" id="comment"
+      name="comment"></textarea>
+  </div>
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endfor %} -->
